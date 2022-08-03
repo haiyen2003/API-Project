@@ -43,6 +43,7 @@ const restoreUser = (req, res, next) => {
         return next();
       }
 
+      //try to find User with key-value pair. If not then error.
       try {
         const { id } = jwtPayload.data;
         req.user = await User.scope('currentUser').findByPk(id);

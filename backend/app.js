@@ -12,6 +12,10 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+const routes = require('./routes');
+
+// ...
+
 
 // Security Middleware
 if (!isProduction) {
@@ -38,12 +42,8 @@ if (!isProduction) {
   );
 
   // backend/app.js
-const routes = require('./routes');
 
-// ...
-
-app.use(routes); // Connect all the routes
-
+  app.use(routes); // Connect all the routes
 
 // backend/app.js
 // ...
