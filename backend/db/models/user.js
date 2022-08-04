@@ -6,10 +6,10 @@ const { Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
- 
-     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+
+    toSafeObject() {
+      const { id, firstName, lastName, username, email } = this; // context will be the User instance
+      return { id, firstName, lastName, username, email };
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -32,10 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
-    static async signup({ username, email, password }) {
+    static async signup({ username, firstName, lastName, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
+        firstName,
+        lastName,
         email,
         hashedPassword
       });
@@ -44,10 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     // check this part //
     static associate(models) {
       // define association here
-      User.hasMany(models.Spot, {foreignKey: 'id'});
-      User.hasMany(models.Booking, {foreignKey: 'id'});
-      User.hasMany(models.Image, {foreignKey: 'id'});
-      User.hasMany(models.Review, {foreignKey: 'id'});
+      User.hasMany(models.Spot, { foreignKey: 'id' });
+      User.hasMany(models.Booking, { foreignKey: 'id' });
+      User.hasMany(models.Image, { foreignKey: 'id' });
+      User.hasMany(models.Review, { foreignKey: 'id' });
     }
   }
   User.init({
@@ -56,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     lastName: {
       type: DataTypes.STRING
-    }
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
