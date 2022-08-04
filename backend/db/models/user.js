@@ -6,11 +6,7 @@ const { Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+ 
      toSafeObject() {
       const { id, username, email } = this; // context will be the User instance
       return { id, username, email };
