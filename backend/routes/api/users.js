@@ -5,7 +5,7 @@ const { User } = require('../../db/models');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { QueryInterface } = require('sequelize/types');
+//const { QueryInterface } = require('sequelize/types');
 
 const validateSignup = [
   check('email')
@@ -27,7 +27,7 @@ const validateSignup = [
   handleValidationErrors
 ];
 // Sign up
-router.post('/', validateSignup, async (req, res) => {
+router.post('/', validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, password, username } = req.body;
 
   const checkUsername = await User.findOne({ where: { username: username } });
@@ -54,7 +54,5 @@ router.post('/', validateSignup, async (req, res) => {
   });
 }
 );
-
-
 
 module.exports = router;
