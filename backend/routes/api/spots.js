@@ -93,13 +93,6 @@ router.post('/',requireAuth, async (req, res, next) => {
             price
         }
     );
-
-    // if(!id){
-    //     const err = new Error('This spot doesnot exist.');
-    //     err.status = 404;
-    //     err.error = ['Please type in valid spot number'];
-    //     return next(err);
-    // }
     res.json(newSpot);
 });
 
@@ -109,9 +102,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, previewImage } = req.body;
    const {spotId} = req.params;
 
-   console.log(spotId, '-------SPOTID-------');
+   //console.log(spotId, '-------SPOTID-------');
     const thisSpot = await Spot.findByPk(spotId);
-    console.log(thisSpot, '//// thisSpot ////');
+   // console.log(thisSpot, '//// thisSpot ////');
     if(!thisSpot){
         const err = new Error('This spot doesnot exist.');
         err.status = 404;
@@ -125,7 +118,11 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
           previewImage: previewImage
         }
     );
-    return res.json(newImage);
+    return res.json({
+        'id': newImage.id,
+        'imageableId': newImage.spotId,
+        'url': newImage.url
+    });
 });
 
 module.exports = router;
