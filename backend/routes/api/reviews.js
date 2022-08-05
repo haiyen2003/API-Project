@@ -11,7 +11,8 @@ router.get('/current', restoreUser, async (req, res, next) => {
     const {user} = req;
     if(user){
         const currReview = await Review.findAll({
-            where: {userId: user.id}
+            where: {userId: user.id},
+            include: [{model: User}]
         });
         return res.json(currReview);
     }

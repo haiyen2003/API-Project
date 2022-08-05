@@ -12,7 +12,6 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 const routes = require('./routes');
-
 // ...
 // Security Middleware
 if (!isProduction) {
