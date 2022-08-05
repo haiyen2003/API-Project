@@ -17,7 +17,7 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        //allowNull: false,
         //references: {model: 'Spots'},
         onDelete: 'CASCADE'
       },
@@ -28,8 +28,8 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNul: false,
-        unique: true,
+       // allowNul: false,
+       // unique: true,
        // references: {model: 'Users'},
         onDelete: 'CASCADE'
       },

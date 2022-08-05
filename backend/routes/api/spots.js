@@ -94,12 +94,12 @@ router.post('/',requireAuth, async (req, res, next) => {
         }
     );
 
-    if(!id){
-        const err = new Error('This spot doesnot exist.');
-        err.status = 404;
-        err.error = ['Please type in valid spot number'];
-        return next(err);
-    }
+    // if(!id){
+    //     const err = new Error('This spot doesnot exist.');
+    //     err.status = 404;
+    //     err.error = ['Please type in valid spot number'];
+    //     return next(err);
+    // }
     res.json(newSpot);
 });
 
