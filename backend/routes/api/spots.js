@@ -107,21 +107,25 @@ router.post('/',requireAuth, async (req, res, next) => {
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, previewImage } = req.body;
+   const {spotId} = req.params;
 
-    const newImage = await Image.create(
-        {
-          url,
-          previewImage
-        }
-    );
-    if(!id){
+   console.log(spotId, '-------SPOTID-------');
+    const thisSpot = await Spot.findByPk(spotId);
+    console.log(thisSpot, '//// thisSpot ////');
+    if(!thisSpot){
         const err = new Error('This spot doesnot exist.');
         err.status = 404;
         err.error = ['Please type in valid spot number'];
         return next(err);
     }
-
-    res.json(newImage);
+    const newImage = await Image.create(
+        {
+          url: url,
+          spotId: spotId,
+          previewImage: previewImage
+        }
+    );
+    return res.json(newImage);
 });
 
 module.exports = router;
