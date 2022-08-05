@@ -11,12 +11,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
-
 const routes = require('./routes');
 
 // ...
-
-
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
@@ -74,8 +71,6 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-// backend/app.js
-// ...
 // Error formatter
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
@@ -87,4 +82,5 @@ app.use((err, _req, res, _next) => {
       stack: isProduction ? null : err.stack
     });
   });
+
 module.exports = app;

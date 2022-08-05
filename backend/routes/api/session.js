@@ -57,8 +57,4 @@ router.get('/', restoreUser, (req, res) => {
   } else return res.json({});
 }
 );
-
-//Get current user
-
-
 module.exports = router;

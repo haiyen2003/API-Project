@@ -26,10 +26,9 @@ const validateSignup = [
     .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
-// Sign up
+// Sign up - my sign up is not working?
 router.post('/', validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, password, username } = req.body;
-
   const checkUsername = await User.findOne({ where: { username: username } });
   if (checkUsername) {
     const err = new Error('User already exists');
