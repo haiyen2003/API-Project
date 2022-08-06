@@ -125,4 +125,28 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     });
 });
 
+//create and return a new review for a spot by id
+
+router.post('/:spotId/review', requireAuth, async (req, res, next) => {
+    const {spotId} = req.params;
+    const {review, stars} = req.body;
+
+    const thisSpot = await Spot.findByPk(spotId);
+     if(!thisSpot){
+         const err = new Error('This spot doesnot exist.');
+         err.status = 404;
+         err.error = ['Please type in valid spot number'];
+         return next(err);
+     }
+
+     const newReview = await Review.create({
+       review: review,
+       stars: stars
+     });
+     return res.json({
+        'review' : newReview.review,
+        'stars': newReview.stars
+     })
+})
+
 module.exports = router;
