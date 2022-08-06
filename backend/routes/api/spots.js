@@ -135,7 +135,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const thisSpot = await Spot.findByPk(spotId);
      if(!thisSpot){
          const err = new Error('This spot doesnot exist.');
-         err.status = 404;
+         err.status(404);
          err.error = ['Please type in valid spot number'];
          return next(err);
      }
@@ -151,7 +151,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
      });
      if (allReview.length >0){
         const err = new Error('There is already a review for this spot by this user');
-        err.status = 403;
+        err.status(403);
         err.error = ['Please only have one review for each spot'];
         return next(err);
      }
