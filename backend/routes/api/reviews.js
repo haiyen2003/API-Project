@@ -30,7 +30,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) =>{
     const thisReview = await Review.findByPk(reviewId);
     if(!thisReview){
         const err = new Error("Review couldn't be found");
-        err.status(404);
+        err.status = 404;
         return next(err);
     };
 
@@ -41,7 +41,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) =>{
     })
     if(thisReviewImages.length >10){
         const err = new Error('Maximum number of images for this resource was reached');
-        err.status(403);
+        err.status = 403;
         return next(err);
     }
 
