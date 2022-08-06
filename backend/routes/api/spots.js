@@ -7,7 +7,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 //const spot = require('../../db/models/spot');
 const router = express.Router();
 const { handleValidationErrors } = require('../../utils/validation');
-
+const {Op} = require('sequelize');
 //get all the Spots
 router.get('/', async (req, res, next) => {
 
