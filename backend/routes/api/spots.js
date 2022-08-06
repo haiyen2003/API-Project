@@ -118,6 +118,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
           previewImage: previewImage
         }
     );
+    res.status(201);
     return res.json({
         'id': newImage.id,
         'imageableId': newImage.spotId,
@@ -139,13 +140,34 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
          return next(err);
      }
 
+     //check if already have a review
+     const allReview = await Review.findAll({
+        where: {
+            [Op.and]: [
+                {userId: req.user.id},
+                {spotId: spotId}
+            ]
+        }
+     });
+     if (allReview.length >0){
+        const err = new Error('There is already a review for this spot by this user');
+        err.status = 403;
+        err.error = ['Please only have one review for each spot'];
+        return next(err);
+     }
+
      const newReview = await Review.create({
        review: review,
-       stars: stars
+       stars: stars,
+       userId: req.user.id,
+       spotId : spotId
      });
+     res.status(201);
      return res.json({
         'review' : newReview.review,
-        'stars': newReview.stars
+        'stars': newReview.stars,
+        'userId': newReview.UserId,
+        'spotId': newReview.spotId
      })
 })
 
