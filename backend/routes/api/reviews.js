@@ -36,7 +36,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) =>{
 
     const thisReviewImages = await Image.findAll({
         where: {
-            spotId: review.spotId
+            spotId: thisReview.spotId
         }
     })
     if(thisReviewImages.length >10){
