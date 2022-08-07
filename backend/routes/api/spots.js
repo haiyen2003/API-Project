@@ -48,17 +48,18 @@ router.get('/:spotId', async (req, res, next) => {
 router.get('/:spotId/reviews', async (req, res, next) => {
     const id = req.params.spotId;
     const currSpot = await Spot.findByPk(id);
-   const review = await Review.findAll({
-    where: { spotId: id},
-    include: Spot
-   });
-   if(!currSpot){
-    const err = new Error('This spot doesnot exist.');
-    err.status = 404;
-    err.error = ['Please type in valid spot number'];
-    return next(err);
-}
-   return res.json(review);
+
+    if(!currSpot){
+        const err = new Error('This spot doesnot exist.');
+        err.status = 404;
+        err.error = ['Please type in valid spot number'];
+        return next(err);
+    }
+    const review = await Review.findAll({
+     where: { spotId: id},
+     include: Spot
+    });
+    return res.json(review);
 });
 
 // get all Bookings for a Spot based on the Spot's Id - why this one show an empty array?
