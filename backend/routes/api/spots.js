@@ -131,6 +131,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const {spotId} = req.params;
     const {review, stars} = req.body;
+    const { user } = req;
 
     const thisSpot = await Spot.findByPk(spotId);
      if(!thisSpot){
@@ -144,7 +145,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
      const allReview = await Review.findAll({
         where: {
             [Op.and]: [
-                {userId: req.user.id},
+                {userId: user.id},
                 {spotId: spotId}
             ]
         }
@@ -159,7 +160,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
      const newReview = await Review.create({
        review: review,
        stars: stars,
-       userId: req.user.id,
+       userId: user.id,
        spotId : spotId
      });
      res.status(201);

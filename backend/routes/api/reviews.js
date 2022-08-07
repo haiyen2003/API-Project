@@ -47,12 +47,11 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) =>{
 
     const newImage = await Image.create({
         url: url,
-        userId: req.user.id,
         spotId: thisReview.spotId,
         reviewId: reviewId,
         previewImage: previewImage
     });
-    res.status(201);
+   
     return res.json({
         'id': newImage.id,
         'imageableId': newImage.spotId,
