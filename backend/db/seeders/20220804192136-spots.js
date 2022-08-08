@@ -4,7 +4,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Spots', [
       {
-        ownerId: 4,
+        ownerId: 1,
         address: '905 Jefferson st',
         city: 'Oakland',
         state: 'CA',
@@ -16,7 +16,7 @@ module.exports = {
         price: 1800
       },
       {
-        ownerId: 5,
+        ownerId: 2,
         address: '1444 Leavenworth st',
         city: 'San Francisco',
         state: 'CA',
@@ -28,7 +28,7 @@ module.exports = {
         price: 1800
       },
       {
-        ownerId: 6,
+        ownerId: 3,
         address: '888 Ofarrell st',
         city: 'San Francisco',
         state: 'CA',
