@@ -12,34 +12,34 @@ const { Op } = require('sequelize');
 
 //get all the Spots
 router.get('/', async (req, res, next) => {
-   // pagination
+    // pagination
 
-    let{page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
     let pagination = {};
     page = page === undefined ? 0 : parseInt(page);
     size = size === undefined ? 20 : parseInt(size);
-    if(page>=1 && size >=1){
+    if (page >= 1 && size >= 1) {
         pagination.limite = size;
-        pagination.offset = size *(page-1);
+        pagination.offset = size * (page - 1);
     }
 
     //query filter
     let queryFilter = [];
-    if(minLat) queryFilter.push({lat: {[Op.gte]: Number(minLat)}});
-    if (maxLat) queryFilters.push({lat: {[Op.lte]: Number(maxLat)}});
-    if (minLng) queryFilters.push({lng: {[Op.gte]: Number(minLng)}});
-    if (maxLng) queryFilters.push({lng: {[Op.lte]: Number(maxLng)}});
-    if (minPrice) queryFilters.push({price: {[Op.gte]: Number(minPrice)}});
-    if (maxPrice) queryFilters.push({price: {[Op.lte]: Number(maxPrice)}});
+    if (minLat) queryFilter.push({ lat: { [Op.gte]: Number(minLat) } });
+    if (maxLat) queryFilters.push({ lat: { [Op.lte]: Number(maxLat) } });
+    if (minLng) queryFilters.push({ lng: { [Op.gte]: Number(minLng) } });
+    if (maxLng) queryFilters.push({ lng: { [Op.lte]: Number(maxLng) } });
+    if (minPrice) queryFilters.push({ price: { [Op.gte]: Number(minPrice) } });
+    if (maxPrice) queryFilters.push({ price: { [Op.lte]: Number(maxPrice) } });
 
 
     const allSpots = await Spot.findAll({
-       where: {
-        [Op.and]: [
-            ...queryFilter
-        ]
-       },
-       ...pagination
+        where: {
+            [Op.and]: [
+                ...queryFilter
+            ]
+        },
+        ...pagination
     });
 
     return res.json({
@@ -234,10 +234,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
     //check endDate-startDate validation
     if (endDate <= startDate) {
-        const err = new Error('Va;odatopm Error');
-        err.status = 400;
-        err.error = ['endDate cannot be on or before startDate'];
-        return next(err);
+        res.status(400);
+        return res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "endDate": "endDate cannot be on or before startDate"
+            }
+        })
     }
 
     //check if there is already a booking for this spot.
