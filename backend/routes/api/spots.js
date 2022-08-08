@@ -67,7 +67,19 @@ router.get('/current', restoreUser, async (req, res, next) => {
 router.get('/:spotId', async (req, res, next) => {
     const id = req.params.spotId;
 
-    const currSpot = await Spot.findByPk(id);
+    const currSpot = await Spot.findByPk(id, {
+        include: [
+            {
+                model: Image,
+                attributes: ['id', ['spotId', 'imageableId'], 'url']
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ]
+    });
     if (!currSpot) {
         const err = new Error('This spot doesnot exist.');
         err.status = 404;
