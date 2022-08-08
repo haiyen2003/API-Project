@@ -223,7 +223,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     if (!thisSpot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
-        err.error = ['Please type in valid spot number'];
         return next(err);
     }
     //check current owner
@@ -271,7 +270,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     //create bookings
     const newBooking = await Booking.create({
-        spotId: spotId,
+      //  spotId: spotId,
         userId: user.id,
         startDate: startDate,
         endDate: endDate
