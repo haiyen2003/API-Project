@@ -8,15 +8,48 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const router = express.Router();
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
+
+
 //get all the Spots
 router.get('/', async (req, res, next) => {
+   // pagination
+
+    let{page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    let pagination = {};
+    page = page === undefined ? 0 : parseInt(page);
+    size = size === undefined ? 20 : parseInt(size);
+    if(page>=1 && size >=1){
+        pagination.limite = size;
+        pagination.offset = size *(page-1);
+    }
+
+    //query filter
+    let queryFilter = [];
+    if(minLat) queryFilter.push({lat: {[Op.gte]: Number(minLat)}});
+    if (maxLat) queryFilters.push({lat: {[Op.lte]: Number(maxLat)}});
+    if (minLng) queryFilters.push({lng: {[Op.gte]: Number(minLng)}});
+    if (maxLng) queryFilters.push({lng: {[Op.lte]: Number(maxLng)}});
+    if (minPrice) queryFilters.push({price: {[Op.gte]: Number(minPrice)}});
+    if (maxPrice) queryFilters.push({price: {[Op.lte]: Number(maxPrice)}});
+
 
     const allSpots = await Spot.findAll({
-        order: [['name', 'ASC']]
+       where: {
+        [Op.and]: [
+            ...queryFilter
+        ]
+       },
+       ...pagination
     });
-    return res.json(allSpots);
-}
-);
+
+    return res.json({
+        "Spots": allSpots,
+        "page": page,
+        "size": size
+    });
+});
+
+
 
 //get all the Spots by currentUser
 
