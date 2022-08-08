@@ -85,9 +85,8 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
         err.status = 404;
         return next(err);
     }
-
     //check current user
-    if (thisReview.userId !== user.id) {
+    else if (thisReview.userId !== user.id) {
         const err = new Error("Cannot edit Review! Review must belong to current user.");
         err.status = 403;
         return next(err);
@@ -111,7 +110,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    if (thisReview.userId !== user.id) {
+   else if (thisReview.userId !== user.id) {
         const err = new Error("Cannot delete Review! Review must belong to current user.");
         err.status = 403;
         return next(err);
