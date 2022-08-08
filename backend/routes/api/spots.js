@@ -224,7 +224,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
 })
 
 //Create and return a new booking from a spot by Id
-
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { spotId } = req.params;
     let { startDate, endDate } = req.body;
