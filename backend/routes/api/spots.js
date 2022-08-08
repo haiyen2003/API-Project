@@ -209,7 +209,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 const thisBookings = await Booking.findAll({
     where: {
-        spotId: thisSpot.Id,
+        spotId: thisSpot.id,
         [Op.and]: [
             {startDate: {[Op.lte]: endDate}},
             {endDate: {[Op.gte]: startDate}}
