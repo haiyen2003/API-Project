@@ -1,8 +1,6 @@
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { Image } = require('../../db/models');
-const { handleValidationErrors } = require('../../utils/validation');
-const { Op } = require('sequelize');
 const router = express.Router();
 
 //Delete and image
@@ -17,6 +15,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
+    //check current user
     if (thisImage.userId !== user.id) {
         const err = new Error('Cannot delete this image. Image must belong to current user');
         err.status = 403;
