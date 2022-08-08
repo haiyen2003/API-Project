@@ -106,7 +106,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 //delete a booking
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const { bookingId } = req.params;
-    const thisBooking = await Image.findByPk(bookingId);
+    const thisBooking = await Booking.findByPk(bookingId);
     const { user } = req;
 
     if (!thisBooking) {
