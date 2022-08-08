@@ -1,5 +1,5 @@
 const express = require('express');
-const { HostNotFoundError } = require('sequelize/types');
+//const { HostNotFoundError } = require('sequelize/types');
 const { Booking } = require('../../db/models');
 const { Spot } = require('../../db/models');
 const { User } = require('../../db/models');

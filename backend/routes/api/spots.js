@@ -81,8 +81,11 @@ router.get('/:spotId/bookings', async(req, res, next) => {
 //Create and return a new spot - fixed ownerId allowNull: true
 router.post('/',requireAuth, async (req, res, next) => {
     const { address, city, state, country,lat,lng,name,description,price } = req.body;
+    const {user} = req;
+    const ownerId = user.id;
     const newSpot = await Spot.create(
         {
+            ownerId,
             address,
             city,
             state,
