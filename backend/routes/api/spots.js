@@ -298,6 +298,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     }
 
     else {
+        thisSpot.owner = user.id;
         thisSpot.address = address;
         thisSpot.city = city;
         thisSpot.state = state;
