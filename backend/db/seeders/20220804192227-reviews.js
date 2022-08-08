@@ -6,13 +6,13 @@ module.exports = {
       {
         review: 'this place is great',
         stars: 4,
-        spotId: 2,
+        spotId: 1,
         userId: 1
       },
       {
         review: 'this place is amazing',
         stars: 5,
-        spotId: 1,
+        spotId: 2,
         userId: 2
       },
       {
@@ -20,12 +20,6 @@ module.exports = {
         stars: 3,
         spotId: 3,
         userId: 3
-      },
-      {
-        review: 'I love this place',
-        stars: 5,
-        spotId: 3,
-        userId: 1
       }
     ], {})
 
