@@ -7,25 +7,25 @@ module.exports = {
         review: 'this place is great',
         stars: 4,
         spotId: 2,
-        userId: 5
+        userId: 1
       },
       {
         review: 'this place is amazing',
         stars: 5,
         spotId: 1,
-        userId: 4
+        userId: 2
       },
       {
         review: 'this place is shit',
         stars: 3,
         spotId: 3,
-        userId: 6
+        userId: 3
       },
       {
         review: 'I love this place',
-        stars: 3,
+        stars: 5,
         spotId: 3,
-        userId: 7
+        userId: 1
       }
     ], {})
 
