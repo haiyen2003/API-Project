@@ -52,14 +52,14 @@ router.get('/', async (req, res, next) => {
 
 
 //get all the Spots by currentUser
-
 router.get('/current', restoreUser, async (req, res, next) => {
     const { user } = req;
     if (user) {
         const currSpot = await Spot.findAll({
             where: { ownerId: user.id }
         });
-        return res.json(currSpot);
+        return res.json({
+            "Spots": currSpot});
     }
 });
 
@@ -111,8 +111,9 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 router.get('/:spotId/bookings', async (req, res, next) => {
     const { spotId } = req.params;
     const booking = await Booking.findAll({
-        where: { spotId: spotId }
-    })
+        where: { spotId: spotId },
+        attributes: ['spotId', 'startDate', 'endDate']
+    });
     const thisSpot = await Spot.findByPk(spotId);
     if (!thisSpot) {
         const err = new Error('This spot doesnot exist.');
@@ -120,7 +121,8 @@ router.get('/:spotId/bookings', async (req, res, next) => {
         err.error = ['Please type in valid spot number'];
         return next(err);
     }
-    return res.json(booking);
+    return res.json({
+        "Bookings" : booking});
 })
 
 //Create and return a new spot - fixed ownerId allowNull: true
