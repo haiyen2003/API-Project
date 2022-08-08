@@ -177,7 +177,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const {spotId} = req.params;
-    const {startDate, endDate} = req.body;
+    let {startDate, endDate} = req.body;
     const {user} = req;
 
     startDate = new Date(startDate);
